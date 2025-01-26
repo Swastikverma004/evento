@@ -16,6 +16,7 @@ db_helper = MongoDBHelper()
 @web_app.route("/") # Decorator
 def index():
     return render_template("index.html")
+web_app.secret_key = "doctors-app-key-v1"
 
 @web_app.route("/contact")
 def contact():
@@ -451,7 +452,7 @@ def fetch_feed_from_db():
 def main():
 
     # In order to use Session Tracking, create a Secret Key
-    web_app.secret_key = "doctors-app-key-v1"
+   
 
     # Run the App infinitely, till user wont quite
     web_app.run()
