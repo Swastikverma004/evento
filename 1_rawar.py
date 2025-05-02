@@ -182,8 +182,7 @@ def feth_user_from_db():
         user_data = result[0]
         session['email'] = user_data["email"]
         session['name'] = user_data["name"]
-        session['created_on']=user_data["created_on"]
-        return render_template("dashboard.html", name=session['name'], email=session['email'])
+]        return render_template("dashboard.html", name=session['name'], email=session['email'])
     else:
         return render_template("error.html", message="User Not Found. Please Try Again",
                                name=session.get("name", "Guest"), email=session.get("email", "N/A"))
@@ -206,7 +205,6 @@ def add_userr_in_db():
     result = db_helper.insert(user_data)
     session['name'] = user_data["name"]
     session['email'] = user_data["email"]
-    session['created_on'] = user_data["created_on"]
     return render_template("a_dashboard.html", name=session['name'], email=session['email'])
 
 @web_app.route("/a_fetch-user", methods=["POST"])
