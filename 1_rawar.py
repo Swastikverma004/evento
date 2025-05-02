@@ -8,6 +8,7 @@ from bson.objectid import ObjectId
 
 web_app = Flask("event Management App")
 
+web_app.secret_key = "event-management-app-key-v1"
 # Create the Object of Flask
 # Which represents a Web Applicatio
 
@@ -459,7 +460,7 @@ def fetch_feed_from_db():
 def main():
 
     # In order to use Session Tracking, create a Secret Key
-    web_app.secret_key = "doctors-app-key-v1"
+   # web_app.secret_key = "doctors-app-key-v1"
 
     # Run the App infinitely, till user wont quite
     web_app.run()
