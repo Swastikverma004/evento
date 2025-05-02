@@ -104,14 +104,14 @@ def feed():
 @web_app.route("/profile")
 def profile():
      if len(session["email"]) != 0:
-        return render_template("profile.html", name=session["name"], email=session["email"], created_on=session["created_on"])
+        return render_template("profile.html", name=session["name"], email=session["email"])
      else:
         return redirect("/")
      
 @web_app.route("/aprofile")
 def aprofile():
      if len(session["email"]) != 0:
-        return render_template("a_profile.html", name=session["name"], email=session["email"], created_on=session["created_on"])
+        return render_template("a_profile.html", name=session["name"], email=session["email"])
      else:
         return redirect("/")
 
