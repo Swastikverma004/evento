@@ -182,7 +182,7 @@ def feth_user_from_db():
         user_data = result[0]
         session['email'] = user_data["email"]
         session['name'] = user_data["name"]
-]        return render_template("dashboard.html", name=session['name'], email=session['email'])
+     return render_template("dashboard.html", name=session['name'], email=session['email'])
     else:
         return render_template("error.html", message="User Not Found. Please Try Again",
                                name=session.get("name", "Guest"), email=session.get("email", "N/A"))
