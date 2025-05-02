@@ -464,7 +464,7 @@ def main():
     web_app.secret_key = "doctors-app-key-v1"
 
     # Run the App infinitely, till user wont quite
-    web_app.run(debug=True)
+    web_app.run()
     # web_app.run(port=5001) # optionally you can give the port number
 
 if __name__ == "__main__":
