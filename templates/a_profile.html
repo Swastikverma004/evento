@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Profile</title>
+    <link rel="icon" type="image/x-icon" href="/static/logo1.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Header Styling */
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .main-header:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Logo Styling */
+        .logo img {
+            width: 120px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Navigation Links */
+        .nav-links ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .nav-links ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .nav-links ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .nav-links ul li a i {
+            font-size: 1.1em;
+        }
+        
+        /* Main Content */
+        .content-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 120px auto 60px;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .content-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .content-header h2 {
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .content-header h2::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            bottom: -10px;
+            left: 20%;
+            border-radius: 3px;
+        }
+        
+        .content-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        /* Profile Card */
+        .profile-card {
+            display: flex;
+            align-items: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #5a6fd1 0%, #6840a0 100%);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin: 0 auto;
+            max-width: 800px;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .avatar-container {
+            position: relative;
+            margin-right: 40px;
+        }
+        
+        .profile-avatar {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid #f1f1f1;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .profile-avatar:hover {
+            transform: scale(1.03);
+        }
+        
+        .change-avatar-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .change-avatar-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            background: linear-gradient(135deg, #5a6fd1 0%, #6840a0 100%);
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-info h3 {
+            font-size: 1.5rem;
+            color: #fffdfd;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .profile-info h3 i {
+            color: #f1f3fa;
+        }
+        
+        .profile-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            color: #f1e9e9;
+        }
+        
+        .profile-detail i {
+            width: 25px;
+            color: #e2e4eb;
+            font-size: 1.1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f7fa;
+            color: #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* Avatar Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: #333;
+        }
+        
+        .upload-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .upload-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        
+        .upload-btn:hover {
+            background: linear-gradient(135deg, #5a6fd1 0%, #6840a0 100%);
+            transform: translateY(-2px);
+        }
+        
+        .upload-btn i {
+            margin-right: 8px;
+        }
+        
+        #file-input {
+            display: none;
+        }
+        
+        .preview-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 10px;
+            border: 3px solid #eee;
+            display: none;
+        }
+        
+        .save-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .save-btn:hover {
+            background: linear-gradient(135deg, #43A047 0%, #1B5E20 100%);
+            transform: translateY(-2px);
+        }
+        
+        .save-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Footer Styling */
+        footer {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 50px 0 20px;
+            text-align: center;
+            width: 100%;
+            margin-top: 60px;
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-section {
+            flex: 1;
+            margin: 15px;
+            min-width: 250px;
+            padding: 0 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .footer-section:hover {
+            transform: translateY(-5px);
+        }
+        
+        .footer-section h2 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-section h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 2px;
+            background: white;
+            bottom: -8px;
+            left: 25%;
+        }
+        
+        .footer-section p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .footer-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .footer-section ul li {
+            margin: 12px 0;
+        }
+        
+        .footer-section ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .footer-section ul li a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            transform: translateY(-5px) scale(1.1);
+            color: #f8f9fa;
+        }
+        
+        .footer-bottom {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-bottom p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Responsive Design */
+        @media screen and (max-width: 992px) {
+            .nav-links ul {
+                gap: 0.8rem;
+            }
+            
+            .nav-links ul li a {
+                padding: 6px 8px;
+                font-size: 14px;
+            }
+            
+            .content-container {
+                padding: 20px;
+            }
+            
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .avatar-container {
+                margin-right: 0;
+                margin-bottom: 30px;
+            }
+            
+            .profile-detail {
+                justify-content: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .main-header {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            .nav-links ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .content-container {
+                margin: 140px auto 60px;
+            }
+            
+            .content-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .footer-section {
+                min-width: 100%;
+                margin-bottom: 30px;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+            }
+        }
+        
+        @media screen and (max-width: 576px) {
+            .content-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .content-header p {
+                font-size: 1rem;
+            }
+            
+            .profile-avatar {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .profile-info h3 {
+                font-size: 1.3rem;
+            }
+            
+            .nav-links ul li a {
+                font-size: 13px;
+                padding: 5px;
+            }
+        }
+    </style>
+  </head>
+  <body>
+    <div id="box">
+        <header class="main-header">
+            <div class="logo">
+                <img src="/static/logo.png" alt="Logo" />
+            </div>
+            <nav class="nav-links">
+                
+                  <ul>
+                    <li><a href="/adashboard"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="/fetch-event"><i class="fa-solid fa-calendar-days"></i> UpcomingEvents</a></li>
+                    <li><a href="/create_event"><i class="fa-solid fa-plus"></i> Create Event</a></li>
+                    <li><a href="/fetch-register"><i class="fa-solid fa-users"></i> Registrations</a></li>
+                    <li><a href="/analyse"><i class="fa-solid fa-comment"></i> Feedbacks</a></li>
+                    <li><a href="/achart"><i class="fa-solid fa-chart-line"></i> Analyse</a></li>
+                    <li><a href="/aprofile"><i class="fa-solid fa-user"></i> Profile</a></li>
+                    <li><a href="/"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <div class="content-container">
+            <div class="content-header">
+                <h2>Admin Profile</h2>
+                <p>View and manage your profile information</p>
+            </div>
+            
+            <div class="profile-card">
+                <div class="avatar-container">
+                    <img id="profile-avatar" class="profile-avatar" src="/static/default-avatar.png" alt="Profile Avatar">
+                    <button class="change-avatar-btn" id="change-avatar-btn">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                </div>
+                <div class="profile-info">
+                    <h3><i class="fas fa-user-circle"></i> Profile Information</h3>
+                    
+                    <div class="profile-detail">
+                        <i class="fas fa-signature"></i>
+                        <span><strong>Name:</strong> {{name}}</span>
+                    </div>
+                    
+                    <div class="profile-detail">
+                        <i class="fas fa-envelope"></i>
+                        <span><strong>Email:</strong> {{email}}</span>
+                    </div>
+                    
+                   
+                    <div class="profile-detail">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span><strong>Member since:</strong> {{created_on}}</span>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Avatar Upload Modal -->
+        <div class="modal" id="avatar-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Upload Profile Picture</h2>
+                <p>Choose an image from your device to set as your profile picture</p>
+                
+                <div class="upload-container">
+                    <label for="file-input" class="upload-btn">
+                        <i class="fas fa-cloud-upload-alt"></i> Choose Image
+                    </label>
+                    <input type="file" id="file-input" accept="image/*">
+                    
+                    <div class="preview-container">
+                        <img id="preview-image" class="preview-image" alt="Preview">
+                    </div>
+                    
+                    <button id="save-btn" class="save-btn" disabled>
+                        <i class="fas fa-save"></i> Save Profile Picture
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h2>About Us</h2>
+                    <p>Evento is your ultimate platform for managing college events effortlessly!</p>
+                    <p>Designed & developed with all the love by Swastik</p>
+                </div>
+                <div class="footer-section">
+                    <h2>Quick Links</h2>
+                    <ul>
+                        <li><a href="/home"><i class="fa-solid fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#about"><i class="fa-solid fa-chevron-right"></i> About</a></li>
+                        <li><a href="/eventmain"><i class="fa-solid fa-chevron-right"></i> Events</a></li>
+                        <li><a href="/feed"><i class="fa-solid fa-chevron-right"></i> Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h2>Contact Us</h2>
+                    <p><i class="fa-solid fa-envelope"></i> Swastikverma004@gmail.com</p>
+                    <p><i class="fa-solid fa-phone"></i> +91 0000000000</p>
+                    <p><i class="fa-solid fa-location-dot"></i> LocalHost</p>
+                </div>
+                <div class="footer-section">
+                    <h2>Follow Us</h2>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/pcte.official/"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/school/pcte-ludhiana/posts/?feedView=all"><i class="bi bi-linkedin"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 developed by Swastik. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const avatarModal = document.getElementById('avatar-modal');
+            const changeAvatarBtn = document.getElementById('change-avatar-btn');
+            const closeModal = document.querySelector('.close-modal');
+            const profileAvatar = document.getElementById('profile-avatar');
+            const fileInput = document.getElementById('file-input');
+            const previewImage = document.getElementById('preview-image');
+            const saveBtn = document.getElementById('save-btn');
+            
+            // Check if there's a saved avatar in local storage
+            const savedAvatar = localStorage.getItem('profileAvatar');
+            if (savedAvatar) {
+                profileAvatar.src = savedAvatar;
+            }
+            
+            // Open modal
+            changeAvatarBtn.addEventListener('click', () => {
+                avatarModal.style.display = 'flex';
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', () => {
+                avatarModal.style.display = 'none';
+                previewImage.style.display = 'none';
+                saveBtn.disabled = true;
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', (event) => {
+                if (event.target === avatarModal) {
+                    avatarModal.style.display = 'none';
+                    previewImage.style.display = 'none';
+                    saveBtn.disabled = true;
+                }
+            });
+            
+            // Handle file selection
+            fileInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = 'block';
+                        saveBtn.disabled = false;
+                    }
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Save profile picture
+            saveBtn.addEventListener('click', function() {
+                if (previewImage.src && previewImage.style.display !== 'none') {
+                    // For demo purposes, we'll use local storage
+                    localStorage.setItem('profileAvatar', previewImage.src);
+                    
+                    // In a real application, you would upload to MongoDB here
+                    // This is where you would call your backend API to save the image
+                    // uploadToMongoDB(previewImage.src);
+                    
+                    // Update the profile avatar
+                    profileAvatar.src = previewImage.src;
+                    
+                    // Close the modal and reset
+                    avatarModal.style.display = 'none';
+                    previewImage.style.display = 'none';
+                    saveBtn.disabled = true;
+                    fileInput.value = '';
+                    
+                    alert('Profile picture saved successfully!');
+                }
+            });
+            
+       
+        });
+    </script>
+  </body>
+</html>
