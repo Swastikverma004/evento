@@ -9,14 +9,21 @@ from bson.objectid import ObjectId
 web_app = Flask("event Management App")
 
 # Create the Object of Flask
-# Which represents a Web Application
+# Which represents a Web Applicatio
 
 db_helper = MongoDBHelper()
 
 @web_app.route("/") # Decorator
 def index():
     return render_template("index.html")
-web_app.secret_key = "doctors-app-key-v1"
+
+@web_app.route("/chart") 
+def chart():
+    return render_template("chart.html")
+
+@web_app.route("/achart") 
+def achart():
+    return render_template("achart.html")
 
 @web_app.route("/contact")
 def contact():
@@ -41,15 +48,6 @@ def user():
 @web_app.route("/addimg")
 def addimg():
     return render_template('image.html')
-
-
-
-@web_app.route("/profile")
-def profile():
-     if len(session["email"]) != 0:
-        return render_template("profile.html", name=session["name"], email=session["email"])
-     else:
-        return redirect("/")
 
 @web_app.route("/venue")
 def venue():
@@ -101,10 +99,18 @@ def feed():
         return render_template("feedback.html", events=result,
                                name=session["name"], email=session["email"])
 
+
+@web_app.route("/profile")
+def profile():
+     if len(session["email"]) != 0:
+        return render_template("profile.html", name=session["name"], email=session["email"], created_on=session["created_on"])
+     else:
+        return redirect("/")
+     
 @web_app.route("/aprofile")
 def aprofile():
      if len(session["email"]) != 0:
-        return render_template("a_profile.html", name=session["name"], email=session["email"])
+        return render_template("a_profile.html", name=session["name"], email=session["email"], created_on=session["created_on"])
      else:
         return redirect("/")
 
@@ -156,6 +162,7 @@ def add_user_in_db():
     result = db_helper.insert(user_data)
     session['name'] = user_data["name"]
     session['email'] = user_data["email"]
+    session['created_on']=user_data["created_on"]
     return render_template("dashboard.html", name=session['name'], email=session['email'])
 
 @web_app.route("/fetch-user", methods=["POST"])
@@ -175,6 +182,7 @@ def feth_user_from_db():
         user_data = result[0]
         session['email'] = user_data["email"]
         session['name'] = user_data["name"]
+        session['created_on']=user_data["created_on"]
         return render_template("dashboard.html", name=session['name'], email=session['email'])
     else:
         return render_template("error.html", message="User Not Found. Please Try Again",
@@ -191,7 +199,6 @@ def add_userr_in_db():
     }
 
     db_helper.collection = db_helper.db["admins"]
-
     existing_user = db_helper.fetch({"email": user_data["email"]})
     if existing_user:
         return render_template("error.html", message="User already exists. Please log in.")
@@ -199,6 +206,7 @@ def add_userr_in_db():
     result = db_helper.insert(user_data)
     session['name'] = user_data["name"]
     session['email'] = user_data["email"]
+    session['created_on'] = user_data["created_on"]
     return render_template("a_dashboard.html", name=session['name'], email=session['email'])
 
 @web_app.route("/a_fetch-user", methods=["POST"])
@@ -218,6 +226,7 @@ def fetch_user_from_db():
         user_data = result[0]
         session['email'] = user_data["email"]
         session['name'] = user_data["name"]
+        session['created_on'] = user_data["created_on"]
         return render_template("a_dashboard.html", name=session['name'], email=session['email'])
     else:
         return render_template("a_error.html", message="User Not Found. Please Try Again",
@@ -452,10 +461,10 @@ def fetch_feed_from_db():
 def main():
 
     # In order to use Session Tracking, create a Secret Key
-   
+    web_app.secret_key = "doctors-app-key-v1"
 
     # Run the App infinitely, till user wont quite
-    web_app.run()
+    web_app.run(debug=True)
     # web_app.run(port=5001) # optionally you can give the port number
 
 if __name__ == "__main__":
